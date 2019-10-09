@@ -1,0 +1,141 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<FileSortingConfiguration>
+  <Finder>
+    <FileFinderConfiguration>
+      <Name>ToSortFolderFinder</Name>
+      <SearchingPath>R:\ToSort</SearchingPath>
+      <DeleteEmptyFolders>true</DeleteEmptyFolders>
+      <Recursive>true</Recursive>
+    </FileFinderConfiguration>
+  </Finder>
+  <Filter>
+    <FileFilterConfiguration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="FileFilterNameConfiguration">
+      <Name>GPX-Filter</Name>
+      <FilterRegex>.*\.gpx</FilterRegex>
+    </FileFilterConfiguration>
+    <FileFilterConfiguration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="FileFilterNameConfiguration">
+      <Name>JPEG-Filter</Name>
+      <FilterRegex>.*\.[jJ]{1}[pP]{1}[eE]{0,1}[gG]{1}</FilterRegex>
+    </FileFilterConfiguration>
+  </Filter>
+  <InformationExtractor>
+    <FileInformationExtractorConfiguration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="FileInformationExtractorFileNameConfiguration">
+      <Name>FileNameExtractor</Name>
+    </FileInformationExtractorConfiguration>
+    <FileInformationExtractorConfiguration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="FileInformationExtractorGpxInformationConfiguration">
+      <Name>GpxInformationExtractor</Name>
+    </FileInformationExtractorConfiguration>
+    <FileInformationExtractorConfiguration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="FileInformationExtractorExifInformationConfiguration">
+      <Name>JpegInformationExtractor</Name>
+    </FileInformationExtractorConfiguration>
+  </InformationExtractor>
+  <InformationFilter>
+    <FileInformationFilterConfiguration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="FileInformationFilterKeyExistsConfiguration">
+      <Name>PictureCreateDayExists</Name>
+      <Key>PictureCreationDate</Key>
+    </FileInformationFilterConfiguration>
+    <FileInformationFilterConfiguration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="FileInformationFilterKeyNotExistsConfiguration">
+      <Name>PictureCreateDayNotExists</Name>
+      <Key>PictureCreationDate</Key>
+    </FileInformationFilterConfiguration>
+  </InformationFilter>
+  <Creator>
+    <FilePathCreatorConfiguration>
+      <Name>GPX File Path Creator</Name>
+      <PathRule>$(GpxDate:yyyy)\$(GpxDate:MM)\$(GpxDate:yyyy-MM-dd)_$(Filename)$(FileExtension)</PathRule>
+      <DestinationBasePath>R:\Dokumente\Wandern\GPX</DestinationBasePath>
+    </FilePathCreatorConfiguration>
+    <FilePathCreatorConfiguration>
+      <Name>GPX File Path Creator Backup</Name>
+      <PathRule>$(GpxDate:yyyy)\$(GpxDate:MM)\$(GpxDate:yyyy-MM-dd)_$(Filename)$(FileExtension)</PathRule>
+      <DestinationBasePath>R:\Dokumente\Wandern\GPX\Backup</DestinationBasePath>
+    </FilePathCreatorConfiguration>
+    <FilePathCreatorConfiguration>
+      <Name>JPEG File Path Creator</Name>
+      <PathRule>$(PictureCreationDate:yyyy)\$(PictureCreationDate:MM)\$(PictureCreationDate:yyyy-MM-dd)\$(Filename)$(FileExtension)</PathRule>
+      <DestinationBasePath>R:\Bilder</DestinationBasePath>
+    </FilePathCreatorConfiguration>
+    <FilePathCreatorConfiguration>
+      <Name>JPEG File Path Creator from file creation date</Name>
+      <PathRule>$(FileCreateDate:yyyy)\$(FileCreateDate:MM)\$(FileCreateDate:yyyy-MM-dd)\$(Filename)$(FileExtension)</PathRule>
+      <DestinationBasePath>R:\Bilder</DestinationBasePath>
+    </FilePathCreatorConfiguration>
+  </Creator>
+  <Mover>
+    <FileMoverConfiguration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <Name>Mover</Name>
+    </FileMoverConfiguration>
+  </Mover>
+
+  <ContentChanger>
+    <FileContentChangerConfiguration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="GpxFileContentChangerConfiguration">
+      <Name>GpxFileContentChangerConfiguration</Name>
+      <SplitAfterMeter>500</SplitAfterMeter>
+    </FileContentChangerConfiguration>
+  </ContentChanger>
+
+  <Rules>
+    <FileSortingRule>
+      <Priority>1</Priority>
+      <FinderNames>
+        <string>ToSortFolderFinder</string>
+      </FinderNames>
+      <FilterNames>
+        <string>GPX-Filter</string>
+      </FilterNames>
+      <InformationExtractorNames>
+        <string>FileNameExtractor</string>
+        <string>GpxInformationExtractor</string>
+      </InformationExtractorNames>
+      <InformationFilterNames>
+        
+      </InformationFilterNames>
+      <PathCreatorName>GPX File Path Creator</PathCreatorName>
+      <BackupPathCreatorName>GPX File Path Creator Backup</BackupPathCreatorName>
+      <MoverName>Mover</MoverName>
+      <FileContentChanger>
+        <string>GpxFileContentChangerConfiguration</string>
+      </FileContentChanger>
+
+    </FileSortingRule>
+
+    <FileSortingRule>
+      <Priority>10</Priority>
+      <FinderNames>
+        <string>ToSortFolderFinder</string>
+      </FinderNames>
+      <FilterNames>
+        <string>JPEG-Filter</string>
+      </FilterNames>
+      <InformationExtractorNames>
+        <string>FileNameExtractor</string>
+        <string>JpegInformationExtractor</string>
+      </InformationExtractorNames>
+      <InformationFilterNames>
+        <string>PictureCreateDayExists</string>
+      </InformationFilterNames>
+      <PathCreatorName>JPEG File Path Creator</PathCreatorName>
+      <MoverName>Mover</MoverName>
+    </FileSortingRule>
+
+    <FileSortingRule>
+      <Priority>15</Priority>
+      <FinderNames>
+        <string>ToSortFolderFinder</string>
+      </FinderNames>
+      <FilterNames>
+        <string>JPEG-Filter</string>
+      </FilterNames>
+      <InformationExtractorNames>
+        <string>FileNameExtractor</string>
+        <string>JpegInformationExtractor</string>
+      </InformationExtractorNames>
+      <InformationFilterNames>
+        <string>PictureCreateDayNotExists</string>
+      </InformationFilterNames>
+      <PathCreatorName>JPEG File Path Creator from file creation date</PathCreatorName>
+      <MoverName>Mover</MoverName>
+    </FileSortingRule>
+    
+  </Rules>
+</FileSortingConfiguration>

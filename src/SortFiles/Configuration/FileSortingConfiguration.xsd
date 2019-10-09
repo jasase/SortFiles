@@ -1,0 +1,286 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="FileSortingConfiguration" nillable="true" type="FileSortingConfiguration" />
+  <xs:complexType name="FileSortingConfiguration">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="1" name="Name" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="Finder" type="ArrayOfFileFinderConfiguration" />
+      <xs:element minOccurs="0" maxOccurs="1" name="Filter" type="ArrayOfFileFilterConfiguration" />
+      <xs:element minOccurs="0" maxOccurs="1" name="InformationExtractor" type="ArrayOfFileInformationExtractorConfiguration" />
+      <xs:element minOccurs="0" maxOccurs="1" name="InformationMapper" type="ArrayOfFileInformationMapperConfiguration" />
+      <xs:element minOccurs="0" maxOccurs="1" name="InformationFilter" type="ArrayOfFileInformationFilterConfiguration" />
+      <xs:element minOccurs="0" maxOccurs="1" name="Creator" type="ArrayOfFilePathCreatorConfiguration" />
+      <xs:element minOccurs="0" maxOccurs="1" name="Mover" type="ArrayOfFileMoverConfiguration" />
+      <xs:element minOccurs="0" maxOccurs="1" name="ContentChanger" type="ArrayOfFileContentChangerConfiguration" />
+      <xs:element minOccurs="0" maxOccurs="1" name="Indexer" type="ArrayOfFileIndexerConfiguration" />
+      <xs:element minOccurs="0" maxOccurs="1" name="Rules" type="ArrayOfFileSortingRule" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ArrayOfFileFinderConfiguration">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="FileFinderConfiguration" nillable="true" type="FileFinderConfiguration" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="FileFinderConfiguration">
+    <xs:complexContent mixed="false">
+      <xs:extension base="FileSortingConfigurationBaseOfFileFinder">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="1" name="SearchingPath" type="xs:string" />
+          <xs:element minOccurs="1" maxOccurs="1" name="DeleteEmptyFolders" type="xs:boolean" />
+          <xs:element minOccurs="1" maxOccurs="1" name="Recursive" type="xs:boolean" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="FileSortingConfigurationBaseOfFileFinder" abstract="true">
+    <xs:complexContent mixed="false">
+      <xs:extension base="FileSortingConfigurationBase" />
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="FileSortingConfigurationBase" abstract="true">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="1" name="Name" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="FileSortingConfigurationBaseOfFileIndexer" abstract="true">
+    <xs:complexContent mixed="false">
+      <xs:extension base="FileSortingConfigurationBase" />
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="FileIndexerConfiguration" abstract="true">
+    <xs:complexContent mixed="false">
+      <xs:extension base="FileSortingConfigurationBaseOfFileIndexer" />
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="FileSortingConfigurationBaseOfFileContentChanger" abstract="true">
+    <xs:complexContent mixed="false">
+      <xs:extension base="FileSortingConfigurationBase" />
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="FileContentChangerConfiguration" abstract="true">
+    <xs:complexContent mixed="false">
+      <xs:extension base="FileSortingConfigurationBaseOfFileContentChanger" />
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="GpxFileContentChangerConfiguration">
+    <xs:complexContent mixed="false">
+      <xs:extension base="FileContentChangerConfiguration">
+        <xs:sequence>
+          <xs:element minOccurs="1" maxOccurs="1" name="SplitAfterMeter" type="xs:int" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="FileSortingConfigurationBaseOfFileMover" abstract="true">
+    <xs:complexContent mixed="false">
+      <xs:extension base="FileSortingConfigurationBase" />
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="FileMoverConfiguration">
+    <xs:complexContent mixed="false">
+      <xs:extension base="FileSortingConfigurationBaseOfFileMover" />
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="FileSortingConfigurationBaseOfFilePathCreator" abstract="true">
+    <xs:complexContent mixed="false">
+      <xs:extension base="FileSortingConfigurationBase" />
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="FilePathCreatorConfiguration">
+    <xs:complexContent mixed="false">
+      <xs:extension base="FileSortingConfigurationBaseOfFilePathCreator">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="1" name="PathRule" type="xs:string" />
+          <xs:element minOccurs="0" maxOccurs="1" name="DestinationBasePath" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="FileSortingConfigurationBaseOfFileInformationFilter" abstract="true">
+    <xs:complexContent mixed="false">
+      <xs:extension base="FileSortingConfigurationBase" />
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="FileInformationFilterConfiguration" abstract="true">
+    <xs:complexContent mixed="false">
+      <xs:extension base="FileSortingConfigurationBaseOfFileInformationFilter" />
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="FileInformationFilterKeyNotExistsConfiguration">
+    <xs:complexContent mixed="false">
+      <xs:extension base="FileInformationFilterConfiguration">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="1" name="Key" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="FileInformationFilterKeyExistsConfiguration">
+    <xs:complexContent mixed="false">
+      <xs:extension base="FileInformationFilterConfiguration">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="1" name="Key" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="FileSortingConfigurationBaseOfFileInformationMapper" abstract="true">
+    <xs:complexContent mixed="false">
+      <xs:extension base="FileSortingConfigurationBase" />
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="FileInformationMapperConfiguration" abstract="true">
+    <xs:complexContent mixed="false">
+      <xs:extension base="FileSortingConfigurationBaseOfFileInformationMapper" />
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="FileInformationMapperSimpleConfiguration">
+    <xs:complexContent mixed="false">
+      <xs:extension base="FileInformationMapperConfiguration">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="1" name="Mappings" type="ArrayOfFileInformationMapperSimpleKeyMappingGroup" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="ArrayOfFileInformationMapperSimpleKeyMappingGroup">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="FileInformationMapperSimpleKeyMappingGroup" nillable="true" type="FileInformationMapperSimpleKeyMappingGroup" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="FileInformationMapperSimpleKeyMappingGroup">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="1" name="Key" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="Map" type="ArrayOfFileInformationMapperSimpleKeyMapping" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ArrayOfFileInformationMapperSimpleKeyMapping">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="FileInformationMapperSimpleKeyMapping" nillable="true" type="FileInformationMapperSimpleKeyMapping" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="FileInformationMapperSimpleKeyMapping">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="1" name="Source" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="Result" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="FileSortingConfigurationBaseOfFileInformationExtractor" abstract="true">
+    <xs:complexContent mixed="false">
+      <xs:extension base="FileSortingConfigurationBase" />
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="FileInformationExtractorConfiguration" abstract="true">
+    <xs:complexContent mixed="false">
+      <xs:extension base="FileSortingConfigurationBaseOfFileInformationExtractor" />
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="FileInformationExtractorRegexGroupsFileNameConfiguration">
+    <xs:complexContent mixed="false">
+      <xs:extension base="FileInformationExtractorConfiguration">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="1" name="GroupRegex" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="FileInformationExtractorFileNameConfiguration">
+    <xs:complexContent mixed="false">
+      <xs:extension base="FileInformationExtractorConfiguration" />
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="FileInformationExtractorGpxInformationConfiguration">
+    <xs:complexContent mixed="false">
+      <xs:extension base="FileInformationExtractorConfiguration" />
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="FileInformationExtractorExifInformationConfiguration">
+    <xs:complexContent mixed="false">
+      <xs:extension base="FileInformationExtractorConfiguration" />
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="FileSortingConfigurationBaseOfFileFilter" abstract="true">
+    <xs:complexContent mixed="false">
+      <xs:extension base="FileSortingConfigurationBase" />
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="FileFilterConfiguration" abstract="true">
+    <xs:complexContent mixed="false">
+      <xs:extension base="FileSortingConfigurationBaseOfFileFilter" />
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="FileFilterNameConfiguration">
+    <xs:complexContent mixed="false">
+      <xs:extension base="FileFilterConfiguration">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="1" name="FilterRegex" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="ArrayOfFileFilterConfiguration">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="FileFilterConfiguration" nillable="true" type="FileFilterConfiguration" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ArrayOfFileInformationExtractorConfiguration">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="FileInformationExtractorConfiguration" nillable="true" type="FileInformationExtractorConfiguration" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ArrayOfFileInformationMapperConfiguration">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="FileInformationMapperConfiguration" nillable="true" type="FileInformationMapperConfiguration" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ArrayOfFileInformationFilterConfiguration">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="FileInformationFilterConfiguration" nillable="true" type="FileInformationFilterConfiguration" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ArrayOfFilePathCreatorConfiguration">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="FilePathCreatorConfiguration" nillable="true" type="FilePathCreatorConfiguration" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ArrayOfFileMoverConfiguration">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="FileMoverConfiguration" nillable="true" type="FileMoverConfiguration" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ArrayOfFileContentChangerConfiguration">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="FileContentChangerConfiguration" nillable="true" type="FileContentChangerConfiguration" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ArrayOfFileIndexerConfiguration">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="FileIndexerConfiguration" nillable="true" type="FileIndexerConfiguration" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ArrayOfFileSortingRule">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="FileSortingRule" nillable="true" type="FileSortingRule" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="FileSortingRule">
+    <xs:sequence>
+      <xs:element minOccurs="1" maxOccurs="1" name="Priority" type="xs:int" />
+      <xs:element minOccurs="0" maxOccurs="1" name="FinderNames" type="ArrayOfString" />
+      <xs:element minOccurs="0" maxOccurs="1" name="FilterNames" type="ArrayOfString" />
+      <xs:element minOccurs="0" maxOccurs="1" name="InformationExtractorNames" type="ArrayOfString" />
+      <xs:element minOccurs="0" maxOccurs="1" name="InformationMapperNames" type="ArrayOfString" />
+      <xs:element minOccurs="0" maxOccurs="1" name="InformationFilterNames" type="ArrayOfString" />
+      <xs:element minOccurs="0" maxOccurs="1" name="PathCreatorName" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="BackupPathCreatorName" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="MoverName" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="FileContentChanger" type="ArrayOfString" />
+      <xs:element minOccurs="0" maxOccurs="1" name="Indexer" type="ArrayOfString" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ArrayOfString">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="string" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

@@ -26,12 +26,15 @@ steps:
 
 - task: NuGetCommand@2
   inputs:
+    command: 'restore'
     restoreSolution: '$(solution)'
+    feedsToUse: 'select'
+    vstsFeed: 'e745086d-201a-4e45-8d8f-ed7088052af8'
 
 - task: VSBuild@1
   inputs:
     solution: '$(solution)'
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
-    msbuildArgs: '/p:RunWixToolsOutOfProc=true /p:AssemblyVersion=$(GitVersion.SemVer)'
+    msbuildArgs: '/p:RunWixToolsOutOfProc=true /p:AssemblyVersion=$(GitVersion.ASSEMBLYSEMFILEVER)'
 

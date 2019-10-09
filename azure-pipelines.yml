@@ -10,7 +10,7 @@ pool:
   vmImage: 'windows-latest'
 
 variables:
-  solution: '**/*.sln'
+  solution: 'src/SortFiles.sln'
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
 
@@ -19,6 +19,8 @@ steps:
 - task: GitVersion@5
   inputs:
     runtime: 'full'
+
+- task: DutchWorkzToolsAllVariables@1
 
 - task: NuGetToolInstaller@1
 

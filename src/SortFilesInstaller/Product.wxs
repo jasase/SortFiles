@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <Product Id="*" Name="SortFiles" Language="1033" Version="!(bind.fileVersion.SortFilesExe)" Manufacturer="Sascha Sternheim" UpgradeCode="53924de1-99b7-4f70-b384-1bd703116471">
+    <Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
+
+    <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+    <MediaTemplate EmbedCab="yes" />
+
+    <Feature Id="ProductFeature" Title="Sort Files" Level="1">
+      <ComponentGroupRef Id="ProductComponents" />
+      <ComponentGroupRef Id="SortFiles_Project" />
+    </Feature>
+
+    <!-- Add the WixUI_InstallDir pre-made sequence to allow some additional steps to the setup wizard -->
+    <!-- IMPORTANT: Remember to add a reference to the WixUIExtension.dll reference! -->
+    <!-- Right click the References project folder > Add Reference, 
+       then navigate to C:\Program Files (x86)\WiX Toolset v3.11\bin\ and select WixUIExtension.dll -->
+    <UIRef Id="WixUI_InstallDir" />
+
+    <!-- This property will allow the end-user to choose a custom install folder -->
+    <Property Id="WIXUI_INSTALLDIR" Value="INSTALLFOLDER" />
+
+  </Product>
+
+  <Fragment>
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="ProgramFilesFolder">
+        <Directory Id="INSTALLFOLDER" Name="SortFiles" />
+      </Directory>
+    </Directory>
+  </Fragment>
+
+  <Fragment>
+    <ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">
+      <Component Id="ProductComponent">
+        <File Id="SortFilesExe" Source="$(var.SortFiles.TargetDir)win10-x64\publish\SortFiles.exe" KeyPath="yes" />
+      </Component>
+    </ComponentGroup>
+  </Fragment>
+</Wix>
